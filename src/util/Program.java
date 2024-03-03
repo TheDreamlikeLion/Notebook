@@ -37,12 +37,12 @@ public class Program {
                 } else {
                     try {
                         validator.checkUserData(stringToCheck);
-                        fileEditor.writeUserData(userInputParser.parseUserData(stringToCheck);
-                    } catch (Exception e) {
+                        fileEditor.writeUserData(userInputParser.parseUserData(stringToCheck));
+                    } catch (ParsingDataStringException e) {
                         e.printStackTrace();
                     }
                 }
-            } catch (ParsingDataStringException e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
