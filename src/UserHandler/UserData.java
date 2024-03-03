@@ -1,17 +1,21 @@
 package UserHandler;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 public class UserData {
 
     private String lastName;
     private String firstName;
     private String middleName;
-    private LocalDate dateOfBirth;
+    private DateFormat dateOfBirth;
     private long phoneNumber;
     private Gender gender;
 
-    public UserData(String lastName, String firstName, String middleName, LocalDate dateOfBirth,
+    public UserData(String lastName, String firstName, String middleName, DateFormat dateOfBirth,
                     long phoneNumber, Gender gender) {
         this.lastName = lastName;
         this.firstName = firstName;
@@ -54,11 +58,11 @@ public class UserData {
         this.middleName = middleName;
     }
 
-    public LocalDate getDateOfBirth() {
+    public DateFormat getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(DateFormat dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -76,5 +80,17 @@ public class UserData {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append("<").append(lastName).append("> ")
+                .append("<").append(firstName).append("> ")
+                .append("<").append(middleName).append("> ")
+                .append("<").append(dateOfBirth.toString()).append("> ")
+                .append("<").append(phoneNumber).append("> ")
+                .append("<").append(gender).append(">");
+        return str.toString();
     }
 }

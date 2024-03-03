@@ -16,7 +16,10 @@ public class FileHandler {
             textFromFile = readFile(fileName);
 
             if (!textFromFile.contains(stringToWrite)) {
-                writeFile(fileName, stringToWrite);
+                StringBuilder str = new StringBuilder();
+                str.append(textFromFile + "\n");
+                str.append(stringToWrite);
+                writeFile(fileName, str.toString());
             } else {
                 System.out.println("Файл уже содержит эти данные.");
             }
