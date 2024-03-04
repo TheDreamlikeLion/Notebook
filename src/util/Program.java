@@ -1,11 +1,8 @@
 package util;
 
-import ExceptionHandler.ParsingDataStringException;
+import ExceptionHandler.OverallListOfException;
 import UserHandler.DataChecker;
-import UserHandler.UserData;
-import UserHandler.DataChecker.*;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Program {
@@ -17,14 +14,17 @@ public class Program {
 
         Scanner userInput = new Scanner(System.in);
 
-        System.out.println("Введите данные пользователя через пробел в следующем формате:");
+        System.out.println("Данная программа считает и запишет в файл введенные пользователем данные через пробел в следующем формате:");
         System.out.println("<Фамилия Имя Отчество дата_рождения номер_телефона пол>");
         System.out.println("(дата_рождения - строка формата dd.MM.yyyy,");
         System.out.println("номер_телефона - в формате 79999999999,");
         System.out.println("пол - символ латиницей f или m.)\n");
-        System.out.println("Введите exit, чтобы выйти из программы.\n*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*");
+        System.out.println("Введите exit, чтобы выйти из программы.");
 
         while (true) {
+            System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*");
+            System.out.println("Введите данные пользователя через пробел в следующем формате:");
+            System.out.println("Фамилия  Имя  Отчество  дата_рождения  номер_телефона  пол");
             String[] stringToCheck = userInput.nextLine().split(" ");
             if (stringToCheck[0].equalsIgnoreCase("exit")) {
                 break;
@@ -38,7 +38,7 @@ public class Program {
                     try {
                         validator.checkUserData(stringToCheck);
                         fileEditor.writeUserData(userInputParser.parseUserData(stringToCheck));
-                    } catch (ParsingDataStringException e) {
+                    } catch (OverallListOfException e) {
                         e.printStackTrace();
                     }
                 }

@@ -1,9 +1,9 @@
 package  ExceptionHandler;
 
-public class ParsingDataStringException extends Exception {
+public class OverallListOfException extends Exception {
     String message;
 
-    public ParsingDataStringException(String message){
+    public OverallListOfException(String message){
         this.message = message;
     }
 

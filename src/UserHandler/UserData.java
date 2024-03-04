@@ -11,11 +11,11 @@ public class UserData {
     private String lastName;
     private String firstName;
     private String middleName;
-    private DateFormat dateOfBirth;
+    private String dateOfBirth;
     private long phoneNumber;
     private Gender gender;
 
-    public UserData(String lastName, String firstName, String middleName, DateFormat dateOfBirth,
+    public UserData(String lastName, String firstName, String middleName, String dateOfBirth,
                     long phoneNumber, Gender gender) {
         this.lastName = lastName;
         this.firstName = firstName;
@@ -58,11 +58,11 @@ public class UserData {
         this.middleName = middleName;
     }
 
-    public DateFormat getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(DateFormat dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

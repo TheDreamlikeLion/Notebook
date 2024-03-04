@@ -2,88 +2,78 @@ package UserHandler;
 
 import ExceptionHandler.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 public class DataChecker {
     public static int fieldsCount = 6;
 
     private String firstName;
     private String lastName;
-    private String patronymicName;
-    private LocalDate birthDate;
+    private String middleName;
+    private String birthDate;
     private Long phoneNumber;
     private Gender gender;
 
     public DataChecker() {
     }
 
-    public void checkUserData(String[] stringToCheck) throws ParsingDataStringException {
-        if (stringToCheck == null) {
-            throw new NullPointerException("Пустой ввод.");
-        }
+    public void checkUserData(String[] stringToCheck) throws OverallListOfException, GeneralException {
+//        if (stringToCheck == null) {
+//            System.out.println(stringToCheck.toString());
+//            throw new GeneralException(stringToCheck.toString());
+//        }
 
-        StringBuilder errorInfo = new StringBuilder();
-        for (String string : stringToCheck) {
-            if (Character.isLetter(string.charAt(0))) {
-                if (string.length() == 1) {
-                    if (this.gender == null) {
-                        try {
-                            this.gender = checkGender(string);
-                        } catch (BadGenderException e) {
-                            errorInfo.append(e.getMessage());
-                        }
-                    }
-                } else {
-                    if (this.lastName == null) {
-                        try {
-                            this.lastName = checkFIO(string);
-                        } catch (BadFIOException e) {
-                            errorInfo.append(e.getMessage());
-                        }
-                    } else if (this.firstName == null) {
-                        try {
-                            this.firstName = checkFIO(string);
-                        } catch (BadFIOException e) {
-                            errorInfo.append(e.getMessage());
-                        }
-                    } else if (this.patronymicName == null) {
-                        try {
-                            this.patronymicName = checkFIO(string);
-                        } catch (BadFIOException e) {
-                            errorInfo.append(e.getMessage());
-                        }
-                    }
-                }
-            } else {
-                if (string.matches("[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}")) {
-                    if (this.birthDate == null) {
-                        try {
-                            this.birthDate = checkBirthDate(string);
-                        } catch (BadBirthDateException e) {
-                            errorInfo.append(e.getMessage());
-                        }
-                    }
-                } else {
-                    if (this.phoneNumber == null) {
-                        try {
-                            this.phoneNumber = checkPhoneNumber(string);
-                        } catch (BadPhoneNumberException e) {
-                            errorInfo.append(e.getMessage());
-                        }
-                    }
-                }
+        StringBuilder errorList = new StringBuilder();
 
+        if (this.lastName == null) {
+            try {
+                this.lastName = checkFIO(stringToCheck[0]);
+            } catch (BadFIOException e) {
+                errorList.append(e.getMessage());
             }
         }
-        if (!errorInfo.isEmpty()) {
-            throw new ParsingDataStringException(errorInfo.toString());
-        }
-    }
 
-    public String getLastName() {
-        return lastName;
+        if (this.firstName == null) {
+            try {
+                this.firstName = checkFIO(stringToCheck[1]);
+            } catch (BadFIOException e) {
+                errorList.append(e.getMessage());
+            }
+        }
+
+        if (this.middleName == null) {
+            try {
+                this.middleName = checkFIO(stringToCheck[2]);
+            } catch (BadFIOException e) {
+                errorList.append(e.getMessage());
+            }
+        }
+
+        if (this.birthDate == null) {
+            try {
+                this.birthDate = checkBirthDate(stringToCheck[3]);
+            } catch (BadBirthDateException e) {
+                errorList.append(e.getMessage());
+            }
+        }
+
+        if (this.phoneNumber == null) {
+            try {
+                this.phoneNumber = checkPhoneNumber(stringToCheck[4]);
+            } catch (BadPhoneNumberException e) {
+                errorList.append(e.getMessage());
+            }
+        }
+
+        if (this.gender == null) {
+            try {
+                this.gender = checkGender(stringToCheck[5]);
+            } catch (BadGenderException e) {
+                errorList.append(e.getMessage());
+            }
+        }
+
+        if (!errorList.isEmpty()) {
+            throw new OverallListOfException(errorList.toString());
+        }
     }
 
     private String checkFIO(String stringToCheck) throws BadFIOException {
@@ -114,25 +104,11 @@ public class DataChecker {
         }
     }
 
-    private LocalDate checkBirthDate(String stringToCheck) throws BadBirthDateException {
-        try {
-            return LocalDate.parse(stringToCheck,
-                    DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        } catch (DateTimeParseException e) {
+    private String checkBirthDate(String stringToCheck) throws BadBirthDateException {
+        if (stringToCheck.matches("(0[1-9]|[1-2][0-9]|3[01])\\.(0[1-9]|1[1-2])\\.(19[0-9][0-9]|20[0-2][0-4])")) {
+            return stringToCheck;
+        } else {
             throw new BadBirthDateException(stringToCheck);
         }
     }
-
-//    @Override
-//    public String toString() {
-//        StringBuilder str = new StringBuilder();
-//        str.append("<").append(lastName).append(">")
-//                .append("<").append(firstName).append(">")
-//                .append("<").append(patronymicName).append(">")
-//                .append("<").append(birthDate.toString()).append(">")
-//                .append("<").append(phoneNumber).append(">")
-//                .append("<").append(gender).append(">");
-//        return str.toString();
-//    }
-
 }

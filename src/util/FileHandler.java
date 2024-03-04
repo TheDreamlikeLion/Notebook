@@ -9,7 +9,6 @@ import java.nio.file.Path;
 public class FileHandler {
     public static void writeUserData(UserData userData) {
         String fileName = userData.getLastName();
-        boolean indicatorFile = false;
         String stringToWrite = userData.toString();
         String textFromFile = "";
         if (Files.exists(Path.of(fileName + ".txt"))) {
@@ -35,6 +34,7 @@ public class FileHandler {
             String line = stringReader.readLine();
             while (line != null) {
                 str.append(line);
+                str.append("");
                 line = stringReader.readLine();
             }
             fileReader.close();
